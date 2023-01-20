@@ -1,0 +1,1 @@
+npm i express postgraphile @graphile-contrib/pg-simplify-inflector cors 
