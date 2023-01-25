@@ -4,6 +4,7 @@ const app = express()
 import { PORT } from "./config.js"
 import { postgraphile } from "postgraphile"
 import { PG_URI } from "./config.js"
+import { JWT_SECRET } from "./config.js"
 import PgSimplifyInflectorPlugin from "@graphile-contrib/pg-simplify-inflector"
 
 app.use(
@@ -14,7 +15,7 @@ app.use(
     enhanceGraphiql: true,
     appendPlugins: [PgSimplifyInflectorPlugin],
     jwtPgTypeIdentifier: "public.jwt_token",
-    jwtSecret: "jwtkwjnfkjsdbfksbdkfhsbdfsdfsdfgsd",
+    jwtSecret: JWT_SECRET,
     pgDefaultRole: "anonymous"
   })
 )

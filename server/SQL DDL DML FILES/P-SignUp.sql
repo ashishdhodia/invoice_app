@@ -15,8 +15,7 @@ CREATE TYPE public.jwt_token AS (
 );
 
 -- business_name, business_address, business_city, business_state, business_phone, business_email, registration_date, username, password
-CREATE
-OR REPLACE FUNCTION SIGNUP(
+CREATE OR REPLACE FUNCTION SIGNUP(
     _business_name TEXT,
     _business_address TEXT,
     _business_city TEXT,
@@ -26,7 +25,7 @@ OR REPLACE FUNCTION SIGNUP(
     _registration_date DATE,
     _username TEXT,
     _password TEXT
-) RETURNS jwt_token AS $ $ DECLARE token_information jwt_token;
+) RETURNS jwt_token AS $$ DECLARE token_information jwt_token; 
 
 b_id TEXT;
 
@@ -61,16 +60,16 @@ b_id := (
         business_name = _business_name
 );
 
-INSERT INTO
-    auth (
+INSERT INTO 
+	auth (
         business_id,
         username,
         password_hash,
         business_email
     )
-VALUES
+VALUES 
     (
-        _business_id,
+        b_id,
         _username,
         crypt(_password, gen_salt('bf', 8)),
         _business_email
@@ -85,14 +84,14 @@ FROM
 WHERE
     business_email = _business_email;
 
-RETURN token_information :: jwt_token;
+RETURN token_information::jwt_token;
 
 END;
 
-$ $ LANGUAGE PLPGSQL VOLATILE SECURITY DEFINER;
+$$ LANGUAGE PLPGSQL VOLATILE SECURITY DEFINER;
 
 -- grant permissions to be able to sign up
---
+
 GRANT EXECUTE ON FUNCTION SIGNUP(
     _business_name TEXT,
     _business_address TEXT,
@@ -104,3 +103,30 @@ GRANT EXECUTE ON FUNCTION SIGNUP(
     _username TEXT,
     _password TEXT
 ) TO anonymous;
+
+Select signup('b_name','b_address','b_city','b_state','b_phone','b_email','2023-01-20','b_name','password');
+
+--Sign in function
+CREATE
+OR REPLACE FUNCTION SIGNIN(_username TEXT, _password TEXT) RETURNS jwt_token AS $$ DECLARE token_information jwt_token;
+
+BEGIN
+SELECT
+    'invoice_app_user',
+    username,
+    business_id INTO token_information
+FROM
+    auth
+WHERE
+    username = _username
+    AND auth.password_hash = crypt(_password, auth.password_hash);
+
+RETURN token_information :: jwt_token;
+
+END;
+
+$$ LANGUAGE PLPGSQL VOLATILE STRICT SECURITY DEFINER;
+
+GRANT EXECUTE ON FUNCTION SIGNIN(_username TEXT, _password TEXT) TO anonymous;
+
+SELECT signin('b_name', 'password')
