@@ -9,7 +9,7 @@ CREATE OR REPLACE FUNCTION generate_business_id(Id INT)
 
 CREATE TABLE business (
     id SERIAL PRIMARY KEY NOT NULL,
-    business_id character varying(100) GENERATED ALWAYS AS (generate_business_id(id)) STORED UNIQUE,
+    business_id character varying(255) GENERATED ALWAYS AS (generate_business_id(id)) STORED UNIQUE,
     business_name character varying(255) NOT NULL,
     business_address character varying(255) NOT NULL,
     business_city character varying(255) NOT NULL,

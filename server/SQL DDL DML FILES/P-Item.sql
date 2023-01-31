@@ -9,7 +9,7 @@ CREATE OR REPLACE FUNCTION generate_item_id(Id INT)
 
 CREATE TABLE item (
     id SERIAL PRIMARY KEY NOT NULL,
-    item_id character varying(100) GENERATED ALWAYS AS (generate_item_id(id)) STORED UNIQUE,
+    item_id character varying(255) GENERATED ALWAYS AS (generate_item_id(id)) STORED UNIQUE,
     item_name character varying(255) NOT NULL,
     item_price character varying(255) NOT NULL,
     business_id character varying(255) NOT NULL,

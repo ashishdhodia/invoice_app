@@ -105,28 +105,3 @@ GRANT EXECUTE ON FUNCTION SIGNUP(
 ) TO anonymous;
 
 Select signup('b_name','b_address','b_city','b_state','b_phone','b_email','2023-01-20','b_name','password');
-
---Sign in function
-CREATE
-OR REPLACE FUNCTION SIGNIN(_username TEXT, _password TEXT) RETURNS jwt_token AS $$ DECLARE token_information jwt_token;
-
-BEGIN
-SELECT
-    'invoice_app_user',
-    username,
-    business_id INTO token_information
-FROM
-    auth
-WHERE
-    username = _username
-    AND auth.password_hash = crypt(_password, auth.password_hash);
-
-RETURN token_information :: jwt_token;
-
-END;
-
-$$ LANGUAGE PLPGSQL VOLATILE STRICT SECURITY DEFINER;
-
-GRANT EXECUTE ON FUNCTION SIGNIN(_username TEXT, _password TEXT) TO anonymous;
-
-SELECT signin('b_name', 'password')

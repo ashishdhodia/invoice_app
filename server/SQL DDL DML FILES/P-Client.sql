@@ -9,7 +9,7 @@ CREATE OR REPLACE FUNCTION generate_client_id(Id INT)
 
 CREATE TABLE client (
     id SERIAL PRIMARY KEY NOT NULL,
-    client_id character varying(100) GENERATED ALWAYS AS (generate_business_id(id)) STORED UNIQUE,
+    client_id character varying(255) GENERATED ALWAYS AS (generate_business_id(id)) STORED UNIQUE,
     business_id character varying(255) NOT NULL,
     client_name character varying(255) NOT NULL,
     client_address character varying(255) NOT NULL,
