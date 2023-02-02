@@ -1,3 +1,8 @@
 --server--
 
 npm i express postgraphile @graphile-contrib/pg-simplify-inflector cors 
+
+--client--
+
+ng add apollo-angular
+npm i bootstrap
