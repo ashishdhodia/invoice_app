@@ -15,10 +15,17 @@ export class LoginComponent implements OnInit {
 
   login(form: FormGroup) {
     this.dataService.getAuthJWTUsingPostMethod(form.value.username, form.value.password).subscribe((res: any) => {
+      if (!res.data.signin.jwtToken) {
+        this.invalidLogin = true
+        return
+      }
       const token = res.data.signin.jwtToken
       localStorage.setItem("jwt", token)
-    }
-    )
+      this.invalidLogin = false
+      this.router.navigate(["/home"])
+    }, err => {
+      this.invalidLogin = true
+    })
   }
 
   ngOnInit(): void {

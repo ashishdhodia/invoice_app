@@ -3,19 +3,19 @@
     <li class="nav-item">
       <a class="nav-link navbar-brand active" routerLink="home">Home</a>
     </li>
-    <li class="nav-item">
+    <li class="nav-item" *ngIf="isUserAuthenticated()">
       <a class="nav-link navbar-brand active" routerLink="invoices">Invoices</a>
     </li>
-    <li class="nav-item">
+    <li class="nav-item" *ngIf="isUserAuthenticated()">
       <a class="nav-link navbar-brand active" routerLink="clients">Clients</a>
     </li>
-    <li class="nav-item">
+    <li class="nav-item" *ngIf="isUserAuthenticated()">
       <a class="nav-link navbar-brand active" routerLink="items">Items</a>
     </li>
   </ul>
 
   <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-    <li class="nav-item float-end">
+    <li *ngIf="isUserAuthenticated()" class="nav-item float-end">
       <a class="nav-link navbar-brand active" routerLink="profile"
         ><h4>
           <svg
@@ -35,8 +35,11 @@
         </h4>
       </a>
     </li>
-    <li class="nav-item float-end">
-      <a class="nav-link navbar-brand active" routerLink="login"
+    <li *ngIf="isUserAuthenticated()" class="nav-item float-end">
+      <a
+        class="nav-link navbar-brand active"
+        routerLink="login"
+        (click)="logOut()"
         ><svg
           xmlns="http://www.w3.org/2000/svg"
           width="25"
@@ -52,9 +55,10 @@
           <path
             fill-rule="evenodd"
             d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"
-          /></svg></a>
+          /></svg
+      ></a>
     </li>
-    <li class="nav-item">
+    <li *ngIf="!isUserAuthenticated()" class="nav-item">
       <a class="nav-link navbar-brand active" routerLink="login">Login</a>
     </li>
   </ul>

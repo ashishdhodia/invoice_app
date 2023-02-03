@@ -1,1 +1,9 @@
-<p>home works!</p>
+<div class="container">
+  <br />
+  <div *ngIf="isUserAuthenticated()" style="color: blue">
+    <h2>YOU ARE LOGGED IN</h2>
+  </div>
+  <div *ngIf="!isUserAuthenticated()" style="color: red">
+    <h2>YOU NOT LOGGED IN</h2>
+  </div>
+</div>
