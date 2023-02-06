@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, Validators } from '@angular/forms'
 import { Router } from '@angular/router'
+import { DataStorageService } from '../data-storage.service'
+import { DatePipe } from '@angular/common'
 
 @Component({
   selector: 'app-signup',
@@ -8,26 +10,35 @@ import { Router } from '@angular/router'
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
-  constructor(private fB: FormBuilder, private router: Router) { }
+  constructor(private dataService: DataStorageService, private fB: FormBuilder, private router: Router, private datePipe: DatePipe) { }
 
   signUpForm: any
   validSignUp!: boolean
 
-  signUpPost(data: any) {
+  signUp(form: any) {
+    console.log(form)
 
+    let registrationDate: any = this.datePipe.transform((new Date), 'YYYY-MM-dd')
+    this.dataService.signUpUser(form.businessName, form.businessAddress, form.businessCity, form.businessState, form.businessPhone, form.businessEmail, registrationDate, form.username, form.password).subscribe((res: any) => {
+      const token = res.data.signup.jwtToken
+      localStorage.setItem("jwt", token)
+      this.router.navigate(["/home"])
+    }, err => {
+      console.log(err)
+    })
   }
 
   ngOnInit(): void {
     this.signUpForm = this.fB.group({
-      "_business_name": ["", [Validators.required]],
-      "_business_address": ["", [Validators.required]],
-      "_business_city": ["", [Validators.required]],
-      "_business_state": ["", [Validators.required]],
-      "_business_phone": ["", [Validators.required]],
-      "_business_email": ["", [Validators.required, Validators.email]],
-      "_registration_date": ["YYYY-MM-DD", [Validators.required]],
-      "_username": ["", [Validators.required, Validators.minLength(8)]],
-      "_password": ["", [Validators.required]]
+      "businessName": ["", [Validators.required]],
+      "businessAddress": ["", [Validators.required]],
+      "businessCity": ["", [Validators.required]],
+      "businessState": ["", [Validators.required]],
+      "businessPhone": ["", [Validators.required]],
+      "businessEmail": ["", [Validators.required, Validators.email]],
+      "username": ["", [Validators.required, Validators.pattern("^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$")
+      ]],
+      "password": ["", [Validators.required]]
     })
   }
 

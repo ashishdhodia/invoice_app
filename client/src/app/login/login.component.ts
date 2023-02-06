@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
   credForm: any
 
   login(form: FormGroup) {
-    this.dataService.getAuthJWTUsingPostMethod(form.value.username, form.value.password).subscribe((res: any) => {
+    this.dataService.getAuthJWT(form.value.username, form.value.password).subscribe((res: any) => {
       if (!res.data.signin.jwtToken) {
         this.invalidLogin = true
         return

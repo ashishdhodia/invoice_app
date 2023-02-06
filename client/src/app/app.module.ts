@@ -19,6 +19,7 @@ import { ProfileComponent } from './profile/profile.component'
 import { HomeComponent } from './home/home.component'
 import { SignupComponent } from './signup/signup.component'
 import { AuthGuard } from './auth.guard'
+import { DatePipe } from '@angular/common'
 
 @NgModule({
   declarations: [
@@ -43,10 +44,11 @@ import { AuthGuard } from './auth.guard'
   ],
   providers: [{
     provide: JWT_OPTIONS,
-    useValue: JWT_OPTIONS
+    useValue: JWT_OPTIONS,
   },
     JwtHelperService,
-    AuthGuard],
+    AuthGuard,
+    DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
