@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
         return
       }
       const token = res.data.signin.jwtToken
-      localStorage.setItem("jwt", token)
+      localStorage.setItem("token", token)
       this.invalidLogin = false
       this.router.navigate(["/home"])
     }, err => {

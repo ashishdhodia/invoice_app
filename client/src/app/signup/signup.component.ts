@@ -16,12 +16,10 @@ export class SignupComponent implements OnInit {
   validSignUp!: boolean
 
   signUp(form: any) {
-    console.log(form)
-
     let registrationDate: any = this.datePipe.transform((new Date), 'YYYY-MM-dd')
     this.dataService.signUpUser(form.businessName, form.businessAddress, form.businessCity, form.businessState, form.businessPhone, form.businessEmail, registrationDate, form.username, form.password).subscribe((res: any) => {
       const token = res.data.signup.jwtToken
-      localStorage.setItem("jwt", token)
+      localStorage.setItem("token", token)
       this.router.navigate(["/home"])
     }, err => {
       console.log(err)

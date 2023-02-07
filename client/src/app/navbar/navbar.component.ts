@@ -11,7 +11,7 @@ export class NavbarComponent {
   constructor(private jwtHelper: JwtHelperService) { }
 
   isUserAuthenticated() {
-    const token = localStorage.getItem("jwt")
+    const token = localStorage.getItem("token")
     if (token && !this.jwtHelper.isTokenExpired(token)) {
       return true
     }
@@ -21,7 +21,7 @@ export class NavbarComponent {
   }
 
   logOut() {
-    localStorage.removeItem("jwt")
+    localStorage.removeItem("token")
   }
 
 }

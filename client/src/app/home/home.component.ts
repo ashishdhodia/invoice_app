@@ -11,7 +11,7 @@ export class HomeComponent implements OnInit {
   constructor(private jwtHelper: JwtHelperService, private router: Router) { }
 
   isUserAuthenticated() {
-    const token = localStorage.getItem("jwt")
+    const token = localStorage.getItem("token")
     if (token && !this.jwtHelper.isTokenExpired(token)) {
       return true
     }
@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
   }
 
   public logOut = () => {
-    localStorage.removeItem("jwt")
+    localStorage.removeItem("token")
   }
 
   ngOnInit(): void {
