@@ -37,4 +37,91 @@ const SIGNUP = gql`
       }
     }
 `
-export { SIGNIN, SIGNUP }
+
+const getClients = gql`
+query {
+  clients {
+    nodes {
+      id
+      businessId
+      clientId
+      clientName
+      clientAddress
+      clientCity
+      clientState
+      clientPhone
+    }
+  }
+}
+`
+
+const createClient = gql`
+mutation createClientArg(
+  $businessId: String!
+  $clientName: String!
+  $clientAddress: String!
+  $clientCity: String!
+  $clientState: String!
+  $clientPhone: String!
+) {
+  createClient(
+    input: {
+      client: {
+        businessId: $businessId
+        clientName: $clientName
+        clientAddress: $clientAddress
+        clientCity: $clientCity
+        clientState: $clientState
+        clientPhone: $clientPhone
+      }
+    }
+  ) {
+    client {
+      id
+      clientState
+      clientPhone
+      clientName
+      clientId
+      clientCity
+      clientAddress
+      businessId
+    }
+  }
+}
+`
+
+const updateClient = gql`
+mutation args(
+  $clientId: String!
+  $clientName: String!
+  $clientAddress: String!
+  $clientCity: String!
+  $clientState: String!
+  $clientPhone: String!
+) {
+  updateClientByClientId(
+    input: {
+      patch: {
+        clientName: $clientName
+        clientAddress: $clientAddress
+        clientCity: $clientCity
+        clientState: $clientState
+        clientPhone: $clientPhone
+      }
+      clientId: $clientId
+    }
+  ) {
+    client {
+      id
+      businessId
+      clientId
+      clientName
+      clientAddress
+      clientCity
+      clientState
+      clientPhone
+    }
+  }
+}
+`
+export { SIGNIN, SIGNUP, getClients, createClient, updateClient }
