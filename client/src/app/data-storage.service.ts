@@ -9,38 +9,28 @@ import { SIGNIN, SIGNUP } from "./graphql/graphql.mutations"
 export class DataStorageService {
   constructor(private apollo: Apollo) { }
 
-  getAuthJWT(username: string, password: string) {
+  getAuthJWT(data: any) {
     return this.apollo.mutate({
       mutation: SIGNIN,
       variables: {
-        username, password
+        username: data.username, password: data.password
       }
     })
   }
 
-  signUpUser(
-    businessName: string,
-    businessAddress: string,
-    businessCity: string,
-    businessState: string,
-    businessPhone: string,
-    businessEmail: string,
-    registrationDate: string,
-    username: string,
-    password: string
-    ) {
+  signUpUser(data: any) {
     return this.apollo.mutate({
       mutation: SIGNUP,
       variables: {
-        businessName,
-        businessAddress,
-        businessCity,
-        businessState,
-        businessPhone,
-        businessEmail,
-        registrationDate,
-        username,
-        password
+        businessName: data.businessName,
+        businessAddress: data.businessAddress,
+        businessCity: data.businessCity,
+        businessState: data.businessState,
+        businessPhone: data.businessPhone,
+        businessEmail: data.businessEmail,
+        registrationDate: data.registrationDate,
+        username: data.username,
+        password: data.password
       }
     })
   }

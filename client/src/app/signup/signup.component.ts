@@ -17,7 +17,20 @@ export class SignupComponent implements OnInit {
 
   signUp(form: any) {
     let registrationDate: any = this.datePipe.transform((new Date), 'YYYY-MM-dd')
-    this.dataService.signUpUser(form.businessName, form.businessAddress, form.businessCity, form.businessState, form.businessPhone, form.businessEmail, registrationDate, form.username, form.password).subscribe((res: any) => {
+
+    let data = {
+      businessName: form.businessName,
+      businessAddress: form.businessAddress,
+      businessCity: form.businessCity,
+      businessState: form.businessState,
+      businessPhone: form.businessPhone,
+      businessEmail: form.businessEmail,
+      registrationDate: registrationDate,
+      username: form.value.username,
+      password: form.value.password
+    }
+
+    this.dataService.signUpUser(data).subscribe((res: any) => {
       const token = res.data.signup.jwtToken
       localStorage.setItem("token", token)
       this.router.navigate(["/home"])
