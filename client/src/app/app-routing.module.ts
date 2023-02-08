@@ -11,7 +11,7 @@ import { SignupComponent } from './signup/signup.component'
 import { AuthGuard } from './auth.guard'
 
 const routes: Routes = [
-  // { path: "navbar", component: NavbarComponent },
+  { path: "**", component: HomeComponent },
   { path: "home", component: HomeComponent },
   { path: "invoices", component: InvoicesComponent, canActivate: [AuthGuard] },
   { path: "clients", component: ClientsComponent, canActivate: [AuthGuard] },
