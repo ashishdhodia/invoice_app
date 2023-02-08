@@ -124,4 +124,71 @@ mutation args(
   }
 }
 `
-export { SIGNIN, SIGNUP, getClients, createClient, updateClient }
+
+const getItems = gql`
+query {
+  items {
+    nodes {
+      id
+      businessId
+      itemId
+      itemName
+      itemPrice
+    }
+  }
+}
+`
+
+const createItem = gql`
+mutation createItemArg(
+  $businessId: String!
+  $itemName: String!
+  $itemPrice: String!
+) {
+  createItem(
+    input: {
+      item: {
+        businessId: $businessId
+        itemName: $itemName
+        itemPrice: $itemPrice
+      }
+    }
+  ) {
+    item {
+      id
+      itemId
+      itemName
+      itemPrice
+      businessId
+    }
+  }
+}
+`
+
+const updateItem = gql`
+mutation updateClientArg(
+  $itemId: String!
+  $itemName: String!
+  $itemPrice: String!
+) {
+  updateItemByItemId(
+    input: {
+      patch: { 
+        itemName: $itemName 
+        itemPrice: $itemPrice 
+      }
+      itemId: $itemId
+    }
+  ) {
+    item {
+      id
+      itemId
+      itemName
+      itemPrice
+      businessId
+    }
+  }
+}
+`
+
+export { SIGNIN, SIGNUP, getClients, createClient, updateClient, getItems, createItem, updateItem }
