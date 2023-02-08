@@ -91,7 +91,7 @@ mutation createClientArg(
 `
 
 const updateClient = gql`
-mutation args(
+mutation updateClientArg(
   $clientId: String!
   $clientName: String!
   $clientAddress: String!
