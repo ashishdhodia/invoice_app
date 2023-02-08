@@ -22,11 +22,13 @@ $$ LANGUAGE SQL STABLE;
 
 GRANT EXECUTE ON FUNCTION current_user_id() TO invoice_app_user;
 
+ALTER TABLE business ENABLE ROW LEVEL SECURITY;
 ALTER TABLE client ENABLE ROW LEVEL SECURITY;
 ALTER TABLE invoice ENABLE ROW LEVEL SECURITY;
 ALTER TABLE item ENABLE ROW LEVEL SECURITY;
 ALTER TABLE invoice_item_info ENABLE ROW LEVEL SECURITY;
 
+CREATE POLICY own_business_data ON business TO invoice_app_user USING (business_id = current_user_id()) WITH CHECK (business_id = current_user_id());
 CREATE POLICY own_client_data ON client TO invoice_app_user USING (business_id = current_user_id()) WITH CHECK (business_id = current_user_id());
 CREATE POLICY own_invoice_data ON invoice TO invoice_app_user USING (business_id = current_user_id()) WITH CHECK (business_id = current_user_id());
 CREATE POLICY own_item_data ON item TO invoice_app_user USING (business_id = current_user_id()) WITH CHECK (business_id = current_user_id());
