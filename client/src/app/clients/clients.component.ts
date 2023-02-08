@@ -98,7 +98,6 @@ export class ClientsComponent {
   ngOnInit(): void {
     this.dataService.getClients().subscribe((res: any) => {
       this.recData = res.data.clients.nodes
-      console.log(this.recData)
     })
 
     const token = localStorage.getItem("token")
