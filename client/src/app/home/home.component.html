@@ -1,9 +1,350 @@
+<!-- <form [formGroup]="recPostData" (ngSubmit)="onPost(recPostData)">
+  <button class="btn btn-primary" type="submit">Submit</button>
+  
+</form> -->
 <div class="container">
-  <br />
-  <div *ngIf="isUserAuthenticated()" style="color: blue">
-    <h2>YOU ARE LOGGED IN</h2>
-  </div>
-  <div *ngIf="!isUserAuthenticated()" style="color: red">
-    <h2>YOU NOT LOGGED IN</h2>
+  <form [formGroup]="invoiceData" (ngSubmit)="onPost(invoiceData)">
+    <!-- <div id="pdfContent #pdfcontent"> -->
+    <div class="form-row row">
+      <div style="margin-top: 20px">
+        <h4 class="ui dividing header">
+          <div class="content">Company</div>
+        </h4>
+        <select
+          class="form-select col-md-3 mt-2 mb-2"
+          (change)="selectedCompany($event)"
+        >
+          <option selected disabled>Select Company Name</option>
+          <option
+            value="{{ item.businessName }}"
+            *ngFor="let item of recCompanyData; let i = index"
+          >
+            {{ item.businessName }}
+          </option>
+        </select>
+        <div class="form-row row">
+          <div class="form-group col-md-3">
+            <label>Name</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="businessName"
+              readonly
+            />
+          </div>
+          <div class="form-group col-md-2">
+            <label>Address</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="businessAddress"
+              readonly
+            />
+          </div>
+          <div class="form-group col-md-2">
+            <label>City</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="businessCity"
+              readonly
+            />
+          </div>
+          <div class="form-group col-md-2">
+            <label>State</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="businessState"
+              readonly
+            />
+          </div>
+          <div class="form-group col-md-3">
+            <label>Phone Number</label>
+            <input
+              type="number"
+              class="form-control"
+              formControlName="businessPhone"
+              readonly
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row row">
+      <div style="margin-top: 20px">
+        <h4 class="ui dividing header">
+          <div class="content">Client</div>
+        </h4>
+        <select
+          class="form-select col-md-3 mt-2 mb-2"
+          (change)="selectedClient($event)"
+        >
+          <option selected disabled>Select Client Name</option>
+          <option
+            value="{{ item.clientName }}"
+            *ngFor="let item of recClientData; let i = index"
+          >
+            {{ item.clientName }}
+          </option>
+        </select>
+        <div class="form-row row">
+          <div class="form-group col-md-3">
+            <label>Name</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="clientName"
+              readonly
+            />
+          </div>
+          <div class="form-group col-md-2">
+            <label>Address</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="clientAddress"
+              readonly
+            />
+          </div>
+          <div class="form-group col-md-2">
+            <label>City</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="clientCity"
+              readonly
+            />
+          </div>
+          <div class="form-group col-md-2">
+            <label>State</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="clientState"
+              readonly
+            />
+          </div>
+          <div class="form-group col-md-3">
+            <label>Phone Number</label>
+            <input
+              type="number"
+              class="form-control"
+              formControlName="clientPhone"
+              readonly
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row row">
+      <div style="margin-top: 20px">
+        <h4 class="ui dividing header">
+          <div class="content">Date</div>
+        </h4>
+        <div class="form-row row">
+          <div class="form-group col-md-3">
+            <label>Date Created</label>
+            <input
+              type="date"
+              class="form-control"
+              formControlName="invoiceDate"
+              (change)="resetDueDate()"
+            />
+          </div>
+          <div class="form-group col-md-3">
+            <label>Due Data</label>
+            <input
+              type="date"
+              class="form-control"
+              formControlName="invoiceDueDate"
+              id="invoiceDueDateInput"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row row">
+      <div class="mt-3">
+        <h4 class="ui dividing header">
+          <div class="content">Items</div>
+        </h4>
+        <button
+          type="button"
+          class="btn btn-success"
+          data-bs-toggle="modal"
+          data-bs-target="#postModal"
+          style="float: right"
+          (click)="resetItemForm()"
+        >
+          Add Item
+        </button>
+      </div>
+    </div>
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Price</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Item Tax</th>
+          <th scope="col">Item Tax Amount</th>
+          <th scope="col">Item Amount W/O Tax</th>
+          <th scope="col">Item Amount Final</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="items.length > 0">
+        <tr *ngFor="let item of items; let i = index">
+          <td>{{ items[i].itemName }}</td>
+          <td>{{ items[i].itemPrice }}</td>
+          <td>{{ items[i].itemQty }}</td>
+          <td>@{{ items[i].itemTax }}%</td>
+          <td>{{ items[i].itemTaxAmount }}</td>
+          <td>{{ items[i].itemAmountWoTax }}</td>
+          <td>{{ items[i].itemAmountFinal }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="form-row row">
+      <div style="margin-top: 20px">
+        <h4 class="ui dividing header">
+          <div class="content">Tax And Total</div>
+        </h4>
+        <div class="form-row row">
+          <div class="form-group col-md-4">
+            <label>Invoice Tax Amount</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="invoiceTaxAmount"
+              readonly
+            />
+          </div>
+          <div class="form-group col-md-4">
+            <label>Invoice Amount WO Tax</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="invoiceAmountWOTax"
+              readonly
+            />
+          </div>
+          <div class="form-group col-md-4">
+            <label>Invoice Total</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="invoiceAmountFinal"
+              readonly
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- </div> -->
+    <div class="mt-3 mb-5" style="float: right">
+      <button class="btn btn-primary me-3">Submit</button>
+      <button class="btn btn-danger">Print</button>
+    </div>
+  </form>
+</div>
+
+<!-- Modal for adding Items -->
+<div
+  class="modal fade"
+  id="postModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <form>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Item</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+
+        <div class="modal-body">
+          <form [formGroup]="itemForm" (ngSubmit)="addToItemList(itemForm)">
+            <div class="form-row row">
+              <div class="form-group">
+                <label>Item</label>
+                <select
+                  class="form-select"
+                  (change)="selectedItem($event)"
+                  id="selectItemDrop"
+                >
+                  <option selected disabled>Select Item</option>
+                  <option
+                    value="{{ item.itemName }}"
+                    *ngFor="let item of recItemData; let i = index"
+                  >
+                    {{ item.itemName }}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Item Price</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  formControlName="itemPrice"
+                  readonly
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Item Quantity</label>
+              <select
+                class="form-select"
+                (change)="selectedQuantity($event)"
+                id="selectQuantityDrop"
+              >
+                <option selected disabled>Select Quantity</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Tax</label>
+              <select
+                class="form-select"
+                (change)="selectedTax($event)"
+                id="selectTaxDrop"
+              >
+                <option selected disabled>Select Tax</option>
+                <option value="6">6%</option>
+                <option value="12">12%</option>
+                <option value="18">18%</option>
+              </select>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                data-bs-dismiss="modal"
+                [disabled]="!itemForm.valid"
+              >
+                Add
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </form>
   </div>
 </div>

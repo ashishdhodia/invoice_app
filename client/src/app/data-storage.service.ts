@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
-import { Apollo, gql } from 'apollo-angular'
-import { SIGNIN, SIGNUP, getClients, createClient, updateClient, getItems, createItem, updateItem } from "./graphql/graphql.mutations"
+import { Apollo, Mutation, gql } from 'apollo-angular'
+import { SIGNIN, SIGNUP, getClients, createClient, updateClient, getItems, createItem, updateItem, getInvoiceDataMaking, createInvoice, createInvoiceItemInfo } from "./graphql/graphql.mutations"
 
 
 @Injectable({
@@ -93,6 +93,41 @@ export class DataStorageService {
         itemId: data.itemId,
         itemName: data.itemName,
         itemPrice: data.itemPrice
+      }
+    })
+  }
+
+  getInvoiceDataMaking() {
+    return this.apollo.watchQuery<any>({
+      query: getInvoiceDataMaking
+    }).valueChanges
+  }
+
+  createInvoice(data: any) {
+    return this.apollo.mutate({
+      mutation: createInvoice,
+      variables: {
+        businessId: data.businessId,
+        clientId: data.clientId,
+        invoiceDate: data.invoiceDate,
+        invoiceDueDate: data.invoiceDueDate,
+        invoiceValue: data.invoiceValue
+      }
+    })
+  }
+
+  createInvoiceItemInfo(data: any) {
+    return this.apollo.mutate({
+      mutation: createInvoiceItemInfo,
+      variables: {
+        invoiceId: data.invoiceId,
+        businessId: data.businessId,
+        itemId: data.itemId,
+        itemQty: data.itemQty,
+        itemTax: data.itemTax,
+        itemTaxAmount: data.itemTaxAmount,
+        itemAmountWoTax: data.itemAmountWoTax,
+        itemAmountFinal: data.itemAmountFinal,
       }
     })
   }

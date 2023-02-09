@@ -191,4 +191,98 @@ mutation updateClientArg(
 }
 `
 
-export { SIGNIN, SIGNUP, getClients, createClient, updateClient, getItems, createItem, updateItem }
+const getInvoiceDataMaking = gql`
+query {
+  businesses {
+    nodes {
+      id
+      businessId
+      businessName
+      businessAddress
+      businessCity
+      businessState
+      businessPhone
+      clients {
+        nodes {
+          id
+          businessId
+          clientId
+          clientName
+          clientAddress
+          clientCity
+          clientState
+          clientPhone
+        }
+      }
+      items {
+        nodes {
+          id
+          businessId
+          itemId
+          itemName
+          itemPrice
+        }
+      }
+    }
+  }
+}
+`
+const createInvoice = gql`
+mutation createInvoiceArg(
+  $businessId: String!
+  $clientId: String!
+  $invoiceDate: Date!
+  $invoiceDueDate: Date!
+  $invoiceValue: String!
+) {
+  createInvoice(
+    input: {
+      invoice: {
+        businessId: $businessId
+        clientId: $clientId
+        invoiceDate: $invoiceDate
+        invoiceDueDate: $invoiceDueDate
+        invoiceValue: $invoiceValue
+      }
+    }
+  ) {
+    invoice {
+      invoiceId
+    }
+  }
+}
+`
+
+const createInvoiceItemInfo = gql`
+mutation createInvoiceItemInfoArg(
+  $invoiceId: String!
+  $businessId: String!
+  $itemId: String!
+  $itemQty: String!
+  $itemTax: String!
+  $itemTaxAmount: String!
+  $itemAmountWoTax: String!
+  $itemAmountFinal: String!
+) {
+  createInvoiceItemInfo(
+    input: {
+      invoiceItemInfo: {
+        invoiceId: $invoiceId
+        businessId: $businessId
+        itemId: $itemId
+        itemQty: $itemQty
+        itemTax: $itemTax
+        itemTaxAmount: $itemTaxAmount
+        itemAmountWoTax: $itemAmountWoTax
+        itemAmountFinal: $itemAmountFinal
+      }
+    }
+  ) {
+    invoiceItemInfo {
+      invoiceId
+      itemId
+    }
+  }
+}
+`
+export { SIGNIN, SIGNUP, getClients, createClient, updateClient, getItems, createItem, updateItem, getInvoiceDataMaking, createInvoice, createInvoiceItemInfo }
