@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { Apollo, Mutation, gql } from 'apollo-angular'
-import { SIGNIN, SIGNUP, getClients, createClient, updateClient, getItems, createItem, updateItem, getInvoiceDataMaking, createInvoice, createInvoiceItemInfo } from "./graphql/graphql.mutations"
+import { SIGNIN, SIGNUP, getClients, createClient, updateClient, getItems, createItem, updateItem, getInvoiceDataMaking, createInvoice, createInvoiceItemInfo, getInvoiceDataView } from "./graphql/graphql.mutations"
 
 
 @Injectable({
@@ -130,5 +130,11 @@ export class DataStorageService {
         itemAmountFinal: data.itemAmountFinal,
       }
     })
+  }
+
+  getInvoiceDataView() {
+    return this.apollo.watchQuery<any>({
+      query: getInvoiceDataView
+    }).valueChanges
   }
 }

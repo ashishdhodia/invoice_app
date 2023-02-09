@@ -285,4 +285,51 @@ mutation createInvoiceItemInfoArg(
   }
 }
 `
-export { SIGNIN, SIGNUP, getClients, createClient, updateClient, getItems, createItem, updateItem, getInvoiceDataMaking, createInvoice, createInvoiceItemInfo }
+
+const getInvoiceDataView = gql`
+query invoiceData {
+  invoices {
+    nodes {
+      invoiceId
+      invoiceDate
+      invoiceDueDate
+      invoiceTaxAmount
+      invoiceAmountWoTax
+      invoiceAmountFinal
+      invoiceItemInfos {
+        nodes {
+          invoiceId
+          itemId
+          itemQty
+          itemTax
+          itemTaxAmount
+          itemAmountWoTax
+          itemAmountFinal
+          item {
+            itemName
+            itemPrice
+          }
+        }
+      }
+      business {
+        businessId
+        businessName
+        businessAddress
+        businessCity
+        businessState
+        businessPhone
+      }
+      client {
+        clientId
+        clientName
+        clientAddress
+        clientCity
+        clientState
+        clientPhone
+      }
+      
+    }
+  }
+}
+`
+export { SIGNIN, SIGNUP, getClients, createClient, updateClient, getItems, createItem, updateItem, getInvoiceDataMaking, createInvoice, createInvoiceItemInfo, getInvoiceDataView }

@@ -1,1 +1,144 @@
-<p>invoices works!</p>
+<div class="container">
+  <table class="table table-striped mt-5 text-center">
+    <thead>
+      <tr>
+        <th scope="col">InvoiceId</th>
+        <th scope="col">BusinessId</th>
+        <th scope="col">ClientId</th>
+        <th scope="col">Date Created</th>
+        <th scope="col">Due Date</th>
+        <th scope="col">Invoice Value</th>
+        <th scope="col">View</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of recInvoiceData; let i = index" class="mt-3">
+        <td>{{ item.invoiceId }}</td>
+        <td>{{ item.business.businessId }}</td>
+        <td>{{ item.client.clientId }}</td>
+        <td>{{ item.invoiceDate }}</td>
+        <td>{{ item.invoiceDueDate }}</td>
+        <td>{{ item.invoiceAmountFinal }}</td>
+        <td>
+          <button class="btn btn-success" (click)="changeView(item.invoiceId)">
+            View
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="container">
+  <div id="PDF" #PDF>
+    <div class="col-md-12">
+      <div class="invoice">
+        <div class="invoice-company text-inverse f-w-600">
+          {{ pdfData.value.businessName }}
+        </div>
+
+        <div class="invoice-header">
+          <div class="invoice-from">
+            <small>From,</small>
+            <address class="m-t-5 m-b-5">
+              <strong class="text-inverse">{{
+                pdfData.value.businessName
+              }}</strong
+              ><br />
+              {{ pdfData.value.businessAddress }}<br />
+              {{ pdfData.value.businessCity }}<br />
+              {{ pdfData.value.businessState }}<br />
+              {{ pdfData.value.businessPhone }}<br />
+            </address>
+          </div>
+          <div class="invoice-to">
+            <small>To,</small>
+            <address class="m-t-5 m-b-5">
+              <strong class="text-inverse">{{
+                pdfData.value.clientName
+              }}</strong
+              ><br />
+              {{ pdfData.value.clientAddress }}<br />
+              {{ pdfData.value.clientCity }}<br />
+              {{ pdfData.value.clientState }}<br />
+              {{ pdfData.value.clientPhone }}<br />
+            </address>
+          </div>
+          <div class="invoice-date">
+            <small>Invoice Date</small>
+            <div class="date text-inverse m-t-5">
+              {{ pdfData.value.invoiceDate }}
+            </div>
+            <div class="invoice-detail">
+              #{{ pdfData.value.invoiceId }}<br />
+            </div>
+          </div>
+        </div>
+
+        <div class="invoice-content">
+          <div class="table-responsive">
+            <table class="table-bordered">
+              <thead>
+                <tr>
+                  <th class="text-center">PRODUCT DESCRIPTION</th>
+                  <th class="text-center" width="10%">RATE</th>
+                  <th class="text-center" width="10%">QUANTITY</th>
+                  <th class="text-center" width="10%">TAX</th>
+                  <th class="text-center" width="10%">TAX AMOUNT</th>
+                  <th class="text-center" width="20%">WO TAX AMOUNT</th>
+                  <th class="text-center" width="10%">TOTAL</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of items; let i = index">
+                  <td>{{ items[i].item.itemName }}</td>
+                  <td class="text-center">{{ items[i].item.itemPrice }}</td>
+                  <td class="text-center">{{ items[i].itemQty }}</td>
+                  <td class="text-center">@{{ items[i].itemTax }}%</td>
+                  <td class="text-center">{{ items[i].itemTaxAmount }}</td>
+                  <td class="text-center">{{ items[i].itemAmountWoTax }}</td>
+                  <td class="text-right">{{ items[i].itemAmountFinal }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="invoice-price">
+            <div class="invoice-price-left">
+              <div class="invoice-price-row">
+                <div class="sub-price">
+                  <small>SUBTOTAL</small>
+                  <span class="text-inverse"
+                    >₹{{ pdfData.value.invoiceAmountWOTax }}</span
+                  >
+                </div>
+                <div class="sub-price">
+                  <i class="fa fa-plus text-muted"></i>
+                </div>
+                <div class="sub-price">
+                  <small>TAX AMOUNT</small>
+                  <span class="text-inverse"
+                    >₹{{ pdfData.value.invoiceTaxAmount }}</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="invoice-price-right">
+              <small>TOTAL</small>
+              <span class="f-w-600"
+                >₹{{ pdfData.value.invoiceAmountFinal }}</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="invoice-footer">
+          <p class="text-center m-b-5 f-w-600">THANK YOU FOR YOUR BUSINESS</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="pdfbutton">
+  <button class="btn btn-success" (click)="makePDF()">Generate Invoice</button>
+</div>
