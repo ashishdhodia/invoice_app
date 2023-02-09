@@ -233,7 +233,9 @@ mutation createInvoiceArg(
   $clientId: String!
   $invoiceDate: Date!
   $invoiceDueDate: Date!
-  $invoiceValue: String!
+  $invoiceTaxAmount: String!
+  $invoiceAmountWoTax: String!
+  $invoiceAmountFinal: String!
 ) {
   createInvoice(
     input: {
@@ -242,7 +244,9 @@ mutation createInvoiceArg(
         clientId: $clientId
         invoiceDate: $invoiceDate
         invoiceDueDate: $invoiceDueDate
-        invoiceValue: $invoiceValue
+        invoiceTaxAmount: $invoiceTaxAmount
+        invoiceAmountWoTax: $invoiceAmountWoTax
+        invoiceAmountFinal: $invoiceAmountFinal
       }
     }
   ) {

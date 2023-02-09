@@ -14,7 +14,9 @@ CREATE TABLE invoice (
     client_id character varying(255) NOT NULL,
     invoice_date date NOT NULL,
     invoice_due_date date NOT NULL,
-    invoice_value character varying(255) NOT NULL,
+    invoice_amount_final character varying(255) NOT NULL,
+    invoice_amount_wo_tax character varying(255) NOT NULL,
+    invoice_tax_amount character varying(255) NOT NULL,
     CONSTRAINT business_id FOREIGN KEY(business_id) REFERENCES business(business_id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT client_id FOREIGN KEY(client_id) REFERENCES client(client_id) ON DELETE CASCADE ON UPDATE CASCADE
 );

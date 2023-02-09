@@ -111,7 +111,9 @@ export class DataStorageService {
         clientId: data.clientId,
         invoiceDate: data.invoiceDate,
         invoiceDueDate: data.invoiceDueDate,
-        invoiceValue: data.invoiceValue
+        invoiceTaxAmount: data.invoiceTaxAmount,
+        invoiceAmountWoTax: data.invoiceAmountWoTax,
+        invoiceAmountFinal: data.invoiceAmountFinal
       }
     })
   }

@@ -96,7 +96,9 @@ export class HomeComponent implements OnInit {
       "clientId": recPostData.value.clientId,
       "invoiceDate": recPostData.value.invoiceDate,
       "invoiceDueDate": recPostData.value.invoiceDueDate,
-      "invoiceValue": recPostData.value.invoiceAmountFinal,
+      "invoiceTaxAmount": recPostData.value.invoiceTaxAmount,
+      "invoiceAmountWoTax": recPostData.value.invoiceAmountWoTax,
+      "invoiceAmountFinal": recPostData.value.invoiceAmountFinal,
     }
 
     this.dataService.createInvoice(data).subscribe((res: any) => {
