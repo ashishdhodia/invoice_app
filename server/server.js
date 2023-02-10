@@ -16,7 +16,9 @@ app.use(
     appendPlugins: [PgSimplifyInflectorPlugin],
     jwtPgTypeIdentifier: "public.jwt_token",
     jwtSecret: JWT_SECRET,
-    pgDefaultRole: "anonymous"
+    pgDefaultRole: "anonymous",
+    showErrorStack: true,
+    extendedErrors: ["hint", "detail", "errcode"],
   })
 )
 
