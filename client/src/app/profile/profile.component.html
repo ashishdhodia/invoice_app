@@ -1,1 +1,50 @@
-<p>profile works!</p>
+<div class="container">
+  <table class="table">
+    <tbody>
+      <tr>
+        <th>Id</th>
+        <td>{{ profileData.businessId }}</td>
+      </tr>
+      <tr>
+        <th>Name</th>
+        <td>{{ profileData.businessName }}</td>
+      </tr>
+      <tr>
+        <th>Address</th>
+        <td>{{ profileData.businessAddress }}</td>
+      </tr>
+      <tr>
+        <th>City</th>
+        <td>{{ profileData.businessCity }}</td>
+      </tr>
+      <tr>
+        <th>State</th>
+        <td>{{ profileData.businessState }}</td>
+      </tr>
+      <tr>
+        <th>Phone</th>
+        <td>{{ profileData.businessPhone }}</td>
+      </tr>
+      <tr>
+        <th>Email</th>
+        <td>{{ profileData.businessEmail }}</td>
+      </tr>
+      <tr>
+        <th>Username</th>
+        <td>{{ profileData.auth.username }}</td>
+      </tr>
+      <tr>
+        <th>Client Count</th>
+        <td>{{ profileData.clients.totalCount }}</td>
+      </tr>
+      <tr>
+        <th>Invoice Count</th>
+        <td>{{ profileData.invoices.totalCount }}</td>
+      </tr>
+      <tr>
+        <th>Item Count</th>
+        <td>{{ profileData.items.totalCount }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

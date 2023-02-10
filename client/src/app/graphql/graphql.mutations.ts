@@ -336,4 +336,32 @@ query invoiceData {
   }
 }
 `
-export { SIGNIN, SIGNUP, getClients, createClient, updateClient, getItems, createItem, updateItem, getInvoiceDataMaking, createInvoice, createInvoiceItemInfo, getInvoiceDataView }
+
+const getProfileData = gql`
+query getProfileData {
+  businesses {
+    nodes {
+      businessId
+      businessName
+      businessAddress
+      businessCity
+      businessState
+      businessPhone
+      businessEmail
+      auth {
+        username
+      }
+      clients {
+        totalCount
+      }
+      invoices {
+        totalCount
+      }
+      items {
+        totalCount
+      }
+    }
+  }
+}
+`
+export { SIGNIN, SIGNUP, getClients, createClient, updateClient, getItems, createItem, updateItem, getInvoiceDataMaking, createInvoice, createInvoiceItemInfo, getInvoiceDataView, getProfileData }

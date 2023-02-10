@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { Apollo, Mutation, gql } from 'apollo-angular'
-import { SIGNIN, SIGNUP, getClients, createClient, updateClient, getItems, createItem, updateItem, getInvoiceDataMaking, createInvoice, createInvoiceItemInfo, getInvoiceDataView } from "./graphql/graphql.mutations"
+import { SIGNIN, SIGNUP, getClients, createClient, updateClient, getItems, createItem, updateItem, getInvoiceDataMaking, createInvoice, createInvoiceItemInfo, getInvoiceDataView, getProfileData } from "./graphql/graphql.mutations"
 
 
 @Injectable({
@@ -129,7 +129,7 @@ export class DataStorageService {
         itemTax: data.itemTax,
         itemTaxAmount: data.itemTaxAmount,
         itemAmountWoTax: data.itemAmountWoTax,
-        itemAmountFinal: data.itemAmountFinal,
+        itemAmountFinal: data.itemAmountFinal
       }
     })
   }
@@ -137,6 +137,12 @@ export class DataStorageService {
   getInvoiceDataView() {
     return this.apollo.watchQuery<any>({
       query: getInvoiceDataView
+    }).valueChanges
+  }
+
+  getProfileData() {
+    return this.apollo.watchQuery<any>({
+      query: getProfileData
     }).valueChanges
   }
 }
