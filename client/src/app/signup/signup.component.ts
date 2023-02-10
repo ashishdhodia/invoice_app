@@ -26,8 +26,8 @@ export class SignupComponent implements OnInit {
       businessPhone: form.businessPhone,
       businessEmail: form.businessEmail,
       registrationDate: registrationDate,
-      username: form.value.username,
-      password: form.value.password
+      username: form.username,
+      password: form.password
     }
 
     this.dataService.signUpUser(data).subscribe((res: any) => {

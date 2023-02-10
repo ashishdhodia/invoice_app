@@ -91,6 +91,8 @@ export class HomeComponent implements OnInit {
   }
 
   onPost(recPostData: any) {
+    console.log(recPostData)
+
     let data = {
       "businessId": recPostData.value.businessId,
       "clientId": recPostData.value.clientId,
@@ -100,6 +102,7 @@ export class HomeComponent implements OnInit {
       "invoiceAmountWoTax": recPostData.value.invoiceAmountWoTax,
       "invoiceAmountFinal": recPostData.value.invoiceAmountFinal,
     }
+    console.log(data)
 
     this.dataService.createInvoice(data).subscribe((res: any) => {
       let invoiceId = res.data.createInvoice.invoice.invoiceId
@@ -130,19 +133,19 @@ export class HomeComponent implements OnInit {
     this.itemForm.value.itemAmountFinal = (parseFloat(this.itemForm.value.itemAmountWoTax) + parseFloat(this.itemForm.value.itemTaxAmount)).toString()
     this.items.push(itemForm.value)
     let invoiceTaxAmount = 0
-    let invoiceAmountWOTax = 0
+    let invoiceAmountWoTax = 0
     let invoiceAmountFinal = 0
 
     this.items.forEach((element: any) => {
       if (element.itemName != "") {
         invoiceTaxAmount = invoiceTaxAmount + parseFloat(element.itemTaxAmount)
-        invoiceAmountWOTax = invoiceAmountWOTax + parseFloat(element.itemAmountWoTax)
+        invoiceAmountWoTax = invoiceAmountWoTax + parseFloat(element.itemAmountWoTax)
         invoiceAmountFinal = invoiceAmountFinal + parseFloat(element.itemAmountFinal)
       }
     })
     this.invoiceData.patchValue({
       "invoiceTaxAmount": (invoiceTaxAmount).toString(),
-      "invoiceAmountWOTax": (invoiceAmountWOTax).toString(),
+      "invoiceAmountWoTax": (invoiceAmountWoTax).toString(),
       "invoiceAmountFinal": (invoiceAmountFinal).toString()
     })
     this.itemForm.reset()
@@ -174,7 +177,7 @@ export class HomeComponent implements OnInit {
       "invoiceDueDate": ["", [Validators.required]],
 
       "invoiceTaxAmount": [0, [Validators.required]],
-      "invoiceAmountWOTax": [0, [Validators.required]],
+      "invoiceAmountWoTax": [0, [Validators.required]],
       "invoiceAmountFinal": [0, [Validators.required]]
     })
 

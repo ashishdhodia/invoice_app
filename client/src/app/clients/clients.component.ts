@@ -90,7 +90,7 @@ export class ClientsComponent {
   onPut(recDataPut: any) {
     let data = recDataPut.value
     data = { ...data, "clientId": this.modalId }
-    this.dataService.updateClient(data).subscribe((res: any)=> {
+    this.dataService.updateClient(data).subscribe((res: any) => {
       window.location.reload()
     })
   }
